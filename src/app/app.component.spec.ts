@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'algo_backend_ui' title`, () => {
+  it(`should have the 'client-backend' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('algo_backend_ui');
+    expect(app.title).toEqual('client-back');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, algo_backend_ui');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, client-back');
   });
 });

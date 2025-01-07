@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
+import { ThemeService } from './core/services/theme.service';
 import { RouterOutlet } from '@angular/router';
-
+import { NgClass } from '@angular/common';
+import { ResponsiveHelperComponent } from './shared/components/responsive-helper/responsive-helper.component';
+import { NgxSonnerToaster } from 'ngx-sonner';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [
+    // NgClass,
+    RouterOutlet, ResponsiveHelperComponent, NgxSonnerToaster],
 })
 export class AppComponent {
-  title = 'algo_backend_ui';
+  title = 'Angular Tailwind';
+
+  constructor(public themeService: ThemeService) {}
 }

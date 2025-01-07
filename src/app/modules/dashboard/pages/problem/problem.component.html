@@ -1,0 +1,50 @@
+<div>
+  <!-- Header -->
+  <app-nft-header></app-nft-header>
+  <p>users works!</p>
+  <div class="flex min-w-full flex-col rounded-xl border border-muted/20 bg-background p-2">
+    <!--    <app-table-action></app-table-action>-->
+    <div
+      class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
+
+
+      <table
+        class="table w-full table-auto border-collapse border-0 text-left align-middle leading-5 text-muted-foreground">
+        <!--      <thead class="border border-muted/20 text-xs text-muted-foreground">-->
+        <!--      <tr app-table-header (onCheck)="toggleUsers($event)"></tr>-->
+        <!--      </thead>-->
+        <tbody>
+          @for (problem of problems(); track $index) {
+            <tr class="hover:bg-card/50">
+              <td class="border border-slate-300 border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">{{$index+1}}</td>
+              <td
+                class="border border-slate-300 border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">{{ problem.id }}
+              </td>
+              <td
+                class="border border-slate-300 border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">{{ problem.title }}
+              </td>
+              <td
+                class="border border-slate-300 border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+              [innerHTML]="problem.body"  >{{ problem.body }}
+              </td>
+              <td
+                class="border border-slate-300 border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+                >{{ problem.time_limit/1000 }}s
+              </td>
+              <td
+                class="border border-slate-300 border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+                >{{ (problem.memory_limit/1024)/1024 }}MB
+              </td>
+
+
+            </tr>
+          } @empty {
+            <tr>
+              <td class="py-4 text-center text-sm" colspan="7">No users found</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

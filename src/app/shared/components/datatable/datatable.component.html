@@ -1,0 +1,45 @@
+<div class="overflow-x-auto">
+  <table class="table-auto w-full border-collapse border border-gray-300 ">
+    <thead>
+    <tr class="bg-gray-100">
+      <th
+        *ngFor="let col of columns"
+        (click)="onSort(col.key)"
+
+        class="cursor-pointer px-4 py-2 border border-gray-300"
+      >
+        {{ col.label }}
+        <span *ngIf="sortColumn === col.key">
+            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+          </span>
+      </th>
+    </tr>
+    </thead>
+    <tbody class="dark:text-white">
+    <tr *ngFor="let row of data">
+      <td *ngFor="let col of columns" class="px-4 py-2 border border-gray-300">
+        {{ col.format ? col.format(row[col.key]) : row[col.key] }}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-end mt-2">
+    <button
+      class="px-4 py-2 mx-1 rounded"
+      [disabled]="!hasPreviousPage"
+      (click)="previousPage()"
+      [ngClass]="{ 'bg-teal-500 hover:bg-teal-600 text-white': hasPreviousPage, 'bg-gray-200': !hasPreviousPage }"
+    >
+      Previous
+    </button>
+    <button
+      class="px-4 py-2 mx-1 rounded"
+      [disabled]="!hasNextPage"
+      [ngClass]="{ 'bg-teal-500 hover:bg-teal-600 text-white': hasNextPage, 'bg-gray-200': !hasNextPage }"
+      (click)="nextPage()"
+    >
+      Next
+    </button>
+  </div>
+</div>
