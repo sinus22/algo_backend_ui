@@ -1,10 +1,13 @@
-import {ApplicationConfig, provideZoneChangeDetection, enableProdMode} from '@angular/core';
+import {ApplicationConfig, provideZoneChangeDetection, enableProdMode, APP_INITIALIZER} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {environment} from '../environments/environment';
+import {environment} from '@environments/environment';
 import {provideAnimations} from '@angular/platform-browser/animations';
-import {provideHttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptors} from '@angular/common/http';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {AuthService} from '@app/core/services/auth.service';
+import {authInterceptor} from '@app/core/interceptor/auth.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -17,8 +20,11 @@ if (environment.production) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideHttpClient(),
-    provideRouter(routes), provideAnimations()]
+    provideRouter(routes),
+    provideAnimations(), provideAnimationsAsync(),
+    provideHttpClient(withInterceptors([authInterceptor]))
+
+  ]
 };
 
 function selfXSSWarning() {

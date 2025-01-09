@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ApiResponse} from '@dashboard/models/apiResponse';
 import {environment} from '@environments/environment';
@@ -23,6 +23,15 @@ export class UserService {
       .set('sort', sort)
       .set('order', order)
     ;
-    return this.http.get<ApiResponse>(this.apiUrl, {params});
+    const accessToken=localStorage.getItem('accessToken');
+    const headers=new HttpHeaders()
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer ' + accessToken);
+    ;
+    return this.http.get<ApiResponse>(this.apiUrl, {params: params
+      // headers: headers,
+      // withCredentials: true
+    });
   }
 }

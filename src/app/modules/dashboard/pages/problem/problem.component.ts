@@ -1,12 +1,5 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {NftHeaderComponent} from '../../components/nft/nft-header/nft-header.component';
-import {NftDualCardComponent} from '../../components/nft/nft-dual-card/nft-dual-card.component';
-import {NftSingleCardComponent} from '../../components/nft/nft-single-card/nft-single-card.component';
-import {NftChartCardComponent} from '../../components/nft/nft-chart-card/nft-chart-card.component';
-import {NftAuctionsTableComponent} from '../../components/nft/nft-auctions-table/nft-auctions-table.component';
-import {TableHeaderComponent} from '../../../uikit/pages/table/components/table-header/table-header.component';
-import {TableRowComponent} from '../../../uikit/pages/table/components/table-row/table-row.component';
-import {TableActionComponent} from '../../../uikit/pages/table/components/table-action/table-action.component';
 import {ProblemService} from '../../service/problem.service';
 import {Problem} from '../../models/problem';
 

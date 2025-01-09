@@ -15,7 +15,7 @@
       </th>
     </tr>
     </thead>
-    <tbody class="dark:text-white">
+    <tbody class="">
     <tr *ngFor="let row of data">
       <td *ngFor="let col of columns" class="px-4 py-2 border border-gray-300">
         {{ col.format ? col.format(row[col.key]) : row[col.key] }}
