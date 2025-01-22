@@ -1,0 +1,84 @@
+<div class="bg-white p-5 shadow-xl rounded-lg">
+  <form [formGroup]="problemForm" (ngSubmit)="onSubmit()">
+    <!-- Problem Number -->
+    <div class="mb-4">
+      <label for="num" class="block font-medium">Problem Number</label>
+      <input id="num" type="number" formControlName="num" class="form-input" />
+<!--      <p *ngIf="f.num.invalid && f.num.touched" class="text-red-500 text-sm">-->
+<!--        <span *ngIf="f.num.errors?.['required']">Problem number is required.</span>-->
+<!--        <span *ngIf="f.num.errors?.['min']">Must be greater than 0.</span>-->
+<!--      </p>-->
+    </div>
+
+    <!-- Title -->
+    <div class="mb-4">
+      <label for="title" class="block font-medium">Title</label>
+      <input id="title" type="text" formControlName="title" class="form-input" />
+<!--      <p *ngIf="f.title.invalid && f.title.touched" class="text-red-500 text-sm">-->
+<!--        <span *ngIf="f.title.errors?.['required']">Title is required.</span>-->
+<!--        <span *ngIf="f.title.errors?.['minlength']">Minimum 3 characters.</span>-->
+<!--      </p>-->
+    </div>
+
+    <!-- Body -->
+    <div class="mb-4">
+      <label for="body" class="block font-medium">Body</label>
+      <textarea id="body" formControlName="body" class="form-textarea"></textarea>
+    </div>
+
+    <!-- Comment -->
+    <div class="mb-4">
+      <label for="comment" class="block font-medium">Comment</label>
+      <textarea id="comment" formControlName="comment" class="form-textarea"></textarea>
+    </div>
+
+    <!-- Time & Memory Limit -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="timeLimit" class="block font-medium">Time Limit (ms)</label>
+        <input id="timeLimit" type="number" formControlName="timeLimit" class="form-input" />
+<!--        <p *ngIf="f.timeLimit.invalid && f.timeLimit.touched" class="text-red-500 text-sm">-->
+<!--          Must be greater than 0.-->
+<!--        </p>-->
+      </div>
+      <div>
+        <label for="memoryLimit" class="block font-medium">Memory Limit (MB)</label>
+        <input id="memoryLimit" type="number" formControlName="memoryLimit" class="form-input" />
+<!--        <p *ngIf="f.memoryLimit.invalid && f.memoryLimit.touched" class="text-red-500 text-sm">-->
+<!--          Must be greater than 0.-->
+<!--        </p>-->
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="mb-4 flex items-center">
+      <input id="status" type="checkbox" formControlName="status" class="mr-2" />
+      <label for="status" class="font-medium">Active</label>
+    </div>
+
+    <!-- Type & Ball -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="type" class="block font-medium">Type</label>
+        <input id="type" type="number" formControlName="type" class="form-input" />
+<!--        <p *ngIf="f.type.invalid && f.type.touched" class="text-red-500 text-sm">-->
+<!--          Required.-->
+<!--        </p>-->
+      </div>
+      <div>
+        <label for="ball" class="block font-medium">Ball</label>
+        <input id="ball" type="number" formControlName="ball" class="form-input" />
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="problemForm.invalid || isSubmitting()"
+      class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 disabled:opacity-50"
+    >
+      <span *ngIf="isSubmitting()">Processing...</span>
+      <span *ngIf="!isSubmitting()">Create Problem</span>
+    </button>
+  </form>
+</div>

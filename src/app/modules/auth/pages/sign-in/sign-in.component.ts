@@ -55,7 +55,7 @@ export class SignInComponent implements OnInit {
         console.log(response);
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('refreshToken', response.refreshToken);
-        // this._router.navigate(['/dashboard/users']);
+        this._router.navigate(['/dashboard/users']);
     },
       error:(response)=> {
         this.errorMessage = "invalid login or password";
