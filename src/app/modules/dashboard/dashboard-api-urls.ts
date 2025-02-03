@@ -1,5 +1,5 @@
 export enum DashboardApiUrls {
-    CONTESTS = 'api/contests',
-    USERS = 'api/users',
+    CONTESTS = 'api/v1/contests',
+    USERS = 'api/v1/users',
     PROBLEMS = 'api/v1/problems',
 }
