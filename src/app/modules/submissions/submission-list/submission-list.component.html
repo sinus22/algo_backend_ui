@@ -1,1 +1,20 @@
-<p>submission-list works!</p>
+<div>
+  <!-- Header -->
+  <app-nft-header createUrl="/dashboard/problems/create"></app-nft-header>
+  <p>Problems works!</p>
+  <div class="flex min-w-full flex-col rounded-xl border border-muted/20 bg-background p-2">
+    <!--    <app-table-action></app-table-action>-->
+    <div
+      class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
+
+
+      <app-datatable [data]="data()" [columns]="columns" [currentPage]="currentPage"
+                     [totalPages]="totalPages" (pageChange)="onPageChange($event)"
+                     [hasPreviousPage]="hasPreviousPage"
+                     [hasNextPage]="hasNextPage"
+                     (sortChange)="onSortChange($event)"
+      >
+      </app-datatable>
+    </div>
+  </div>
+</div>
