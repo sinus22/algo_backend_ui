@@ -18,6 +18,14 @@ export class Menu {
           ],
         },
         {
+          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          label: 'Users',
+          route: '/users',
+          children: [
+            { label: 'User list', route: '/users/list' },
+          ],
+        },
+        {
           icon: 'assets/icons/heroicons/outline/lock-closed.svg',
           label: 'Auth',
           route: '/auth',

@@ -1,0 +1,18 @@
+<div class="flex justify-end mt-2">
+  <button
+    class="px-4 py-2 mx-1 rounded"
+    [disabled]="!hasPreviousPage"
+    (click)="previousPage()"
+    [ngClass]="{ 'bg-teal-500 hover:bg-teal-600 text-white': hasPreviousPage, 'bg-gray-200': !hasPreviousPage }"
+  >
+    Previous
+  </button>
+  <button
+    class="px-4 py-2 mx-1 rounded"
+    [disabled]="!hasNextPage"
+    [ngClass]="{ 'bg-teal-500 hover:bg-teal-600 text-white': hasNextPage, 'bg-gray-200': !hasNextPage }"
+    (click)="nextPage()"
+  >
+    Next
+  </button>
+</div>

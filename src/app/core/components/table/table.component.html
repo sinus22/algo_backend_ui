@@ -1,0 +1,19 @@
+<table class="table-auto w-full border-collapse border border-gray-300 ">
+  <thead>
+  <tr class="bg-gray-100">
+    <th
+      *ngFor="let col of columns"
+      class="cursor-pointer px-4 py-2 border border-gray-300"
+    >
+      {{ col.label }}
+    </th>
+  </tr>
+  </thead>
+  <tbody class="">
+  <tr *ngFor="let row of data">
+    <td *ngFor="let col of columns" class="px-4 py-2 border border-gray-300">
+      {{ col.format ? col.format(row[col.key]) : row[col.key] }}
+    </td>
+  </tr>
+  </tbody>
+</table>
