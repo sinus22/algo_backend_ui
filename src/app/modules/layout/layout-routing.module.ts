@@ -13,6 +13,24 @@ const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () => import('../users/users.module').then((m) => m.UsersModule),
   },
+  {
+    path: 'contests',
+    component: LayoutComponent,
+    loadChildren: () => import('../contests/contests.module').then((m) => m.ContestsModule),
+  },
+  {
+    path: 'problems',
+    component: LayoutComponent,
+    loadChildren: () => import('../problems/problems.module').then((m) => m.ProblemsModule),
+  },
+  {
+    path: 'submissions',
+    component: LayoutComponent,
+    loadChildren: () => import('../submissions/submissions.module').then((m) => m.SubmissionsModule),
+  },
+
+
+
 
   {
     path: 'components',

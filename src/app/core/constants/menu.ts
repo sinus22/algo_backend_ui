@@ -12,9 +12,6 @@ export class Menu {
           route: '/dashboard',
           children: [
             { label: 'Nfts', route: '/dashboard/nfts' },
-            { label: 'Users', route: '/dashboard/users' },
-            { label: 'Problems', route: '/dashboard/problems' },
-            { label: 'Contests', route: '/dashboard/contests' },
           ],
         },
         {
@@ -25,6 +22,33 @@ export class Menu {
             { label: 'User list', route: '/users/list' },
           ],
         },
+        {
+          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          label: 'Contests',
+          route: '/contests',
+          children: [
+            { label: 'Contest list', route: '/contests/list' },
+          ],
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          label: 'Problems',
+          route: '/problems',
+          children: [
+            { label: 'Problem list', route: '/problems/list' },
+          ],
+        },
+        {
+          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          label: 'Submissions',
+          route: '/submissions',
+          children: [
+            { label: 'Submission list', route: '/submissions/list' },
+          ],
+        },
+
+
+
         {
           icon: 'assets/icons/heroicons/outline/lock-closed.svg',
           label: 'Auth',
