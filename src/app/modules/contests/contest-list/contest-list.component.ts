@@ -1,24 +1,22 @@
-import {Component, OnInit, signal, ViewChild} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ContestService} from '@dashboard/service/contest.service';
-import {DatatableComponent} from '@shared/components/datatable/datatable.component';
-import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
-import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {Contest} from '@dashboard/models/contest';
 import {ColDef} from '@dashboard/models/coldef';
+import {PaginatedResponse} from '@dashboard/models/paginationResponse';
+import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
+import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 
 @Component({
-  selector: 'app-contest',
+  selector: 'app-contest-list',
   imports: [
-    // DatatableComponent,
     NftHeaderComponent,
-    DatatableComponent,
+    DatatableComponent
   ],
+  templateUrl: './contest-list.component.html',
   standalone: true,
-  templateUrl: './contest.component.html',
-  styleUrl: './contest.component.scss'
+  styleUrl: './contest-list.component.scss'
 })
-export class ContestComponent implements OnInit {
-  // @ViewChild('agGrid') agGrid: AgGridAngular
+export class ContestListComponent implements OnInit{
   constructor(private contestService: ContestService) {
   }
 
@@ -41,21 +39,6 @@ export class ContestComponent implements OnInit {
     {label: 'Status', key: 'status', sortable: true},
   ];
 
-  // Column Definitions: Defines the columns to be displayed.
-  // colDefs: ColDef[] = [
-  //   {field: "make", flex: 2},
-  //   {field: "model",flex: 2 },
-  //   {field: "price", flex: 2},
-  //   {field: "electric", flex: 2}
-  // ];
-  // colDef: ColDef[] = [
-  //   {field: "id"},
-  //   {field: "title"},
-  //   {field: "startDate"},
-  //   {field: "duration"},
-  //   {field: "type"},
-  //   {field: "status"}
-  // ]
 
   ngOnInit() {
     this.loadContests();
