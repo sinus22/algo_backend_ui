@@ -30,6 +30,11 @@ export class UserListComponent implements OnInit {
     {label: 'Id', key: 'id', sortable: true},
     {label: 'Username', key: 'username', sortable: true},
     {label: 'Email', key: 'email', sortable: true},
+    {label: 'Status', key: 'status', sortable: true},
+    {label: 'Created At', key: 'createdAt', sortable: true, format: (value: any) =>
+        new Date(value).toLocaleString()},
+    {label: 'Updated At', key: 'updatedAt', sortable: true, format: (value: any) =>
+        new Date(value).toLocaleString()},
   ]
 
   constructor(private userService: UserService) {

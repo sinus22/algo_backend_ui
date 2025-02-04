@@ -5,13 +5,14 @@ import {ApiResponse} from '@dashboard/models/apiResponse';
 import {environment} from '@environments/environment';
 import UrlJoin from 'url-join';
 import {DashboardApiUrls} from '@dashboard/dashboard-api-urls';
+import {UsersApiUrls} from '@app/modules/users/users-api-urls';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private apiUrl = UrlJoin(environment.apiUrl, DashboardApiUrls.USERS);
+  private apiUrl = UrlJoin(environment.apiUrl, UsersApiUrls.USERS);
 
   constructor(private http: HttpClient) {
   }
