@@ -12,7 +12,7 @@ export abstract class BaseTableComponent<T> implements OnInit {
   totalItems = signal<number>(0);
   totalPages = signal<number>(0);
   currentPage = signal<number>(1);
-  pageSize = signal<number>(10);
+  pageSize = signal<number>(20);
   sortColumn = signal<string>('id');
   sortDirection = signal<string>('desc');
   hasPreviousPage = signal<boolean>(true);

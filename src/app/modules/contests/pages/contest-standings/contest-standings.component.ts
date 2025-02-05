@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {ContestService} from '@app/modules/contests/services/contest.service';
 import {Contest} from '@app/modules/contests/models/contest';
 import {ColDef} from '@dashboard/models/coldef';
@@ -21,6 +21,10 @@ import {BaseTableComponent} from '@app/core/base/base-table-component';
 export class ContestStandingsComponent extends BaseTableComponent<ContestStanding> {
   private contestService = inject(ContestService);
 
+  constructor() {
+    super();
+    this.pageSize.set(40);
+  }
 
   columns: ColDef[] = [
     {label: 'Id', key: 'id', sortable: true},
