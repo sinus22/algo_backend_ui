@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {University} from '@app/modules/users/models/university';
 import {ColDef} from '@dashboard/models/coldef';
 import {UserService} from '@app/modules/users/services/user.service';
@@ -6,6 +6,7 @@ import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 import {Faculty} from '@app/modules/users/models/faculty';
+import {BaseTableComponent} from '@app/core/base/base-table-component';
 
 @Component({
   selector: 'app-faculties',
@@ -17,16 +18,8 @@ import {Faculty} from '@app/modules/users/models/faculty';
   standalone: true,
   styleUrl: './faculties.component.scss'
 })
-export class FacultiesComponent implements OnInit {
-  data = signal<Faculty[]>([]);
-  totalItems = signal<number>(0);
-  totalPages = signal<number>(0);
-  currentPage = signal<number>(1);
-  pageSize = signal<number>(20);
-  sortColumn = signal<string>('id');
-  sortDirection = signal<string>('desc');
-  hasPreviousPage = signal<boolean>(true);
-  hasNextPage = signal<boolean>(true);
+export class FacultiesComponent extends BaseTableComponent<Faculty> {
+  private userService = inject(UserService);
   columns: ColDef[] = [
     {label: 'Id', key: 'id', sortable: true},
     {label: 'Name', key: 'name', sortable: true},
@@ -42,13 +35,15 @@ export class FacultiesComponent implements OnInit {
     },
   ]
 
-  constructor(private userService: UserService) {
-  }
 
-
-  loadFaculties(): void {
+  fetchData(): void {
     this.userService
-      .getFaculties(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
+      .getFaculties({
+        page: this.currentPage(),
+        pageSize: this.pageSize(),
+        sort: this.sortColumn(),
+        order: this.sortDirection()
+      })
       .subscribe({
           next: (response) => {
 
@@ -71,21 +66,5 @@ export class FacultiesComponent implements OnInit {
           }
         }
       );
-  }
-
-  ngOnInit(): void {
-    this.loadFaculties();
-
-  }
-
-  onPageChange(page: number): void {
-    this.currentPage.set(page);
-    this.loadFaculties();
-  }
-
-  onSortChange(sort: { column: string, order: string }) {
-    this.sortColumn.set(sort.column);
-    this.sortDirection.set(sort.order);
-    this.loadFaculties();
   }
 }

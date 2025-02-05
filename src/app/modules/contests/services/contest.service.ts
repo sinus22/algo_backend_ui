@@ -5,44 +5,45 @@ import {Observable} from 'rxjs';
 import {ApiResponse} from '@dashboard/models/apiResponse';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {ContestsApiUrls} from '@app/modules/contests/contests-api-urls';
+import {BaseService} from '@app/core/base/base-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContestService {
+export class ContestService extends BaseService<ApiResponse> {
 
-  private apiUrl = UrlJoin(environment.apiUrl, ContestsApiUrls.CONTESTS);
-
-  constructor(private client: HttpClient) {
+  constructor(http: HttpClient) {
+    super(http, UrlJoin(environment.apiUrl, ContestsApiUrls.CONTESTS))
   }
 
-  getContests(page: number = 1, pageSize: number = 20, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
-    return this.client.get<ApiResponse>(this.apiUrl, {params});
+  getContests(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  }): Observable<ApiResponse> {
+    return this.getDataPagination('', options);
   }
 
-  getContestStandings(page: number = 1, pageSize: number = 20, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
-    return this.client.get<ApiResponse>(UrlJoin(this.apiUrl, 'standings'), {params});
+  getContestStandings(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  }): Observable<ApiResponse> {
+    return this.getDataPagination('standings', options);
   }
-  getContestProblems(page: number = 1, pageSize: number = 20, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
-    return this.client.get<ApiResponse>(UrlJoin(this.apiUrl, 'problems'), {params});
+
+  getContestProblems(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  }): Observable<ApiResponse> {
+    return this.getDataPagination('problems', options);
   }
 
 }

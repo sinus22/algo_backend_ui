@@ -6,58 +6,56 @@ import {environment} from '@environments/environment';
 import UrlJoin from 'url-join';
 import {DashboardApiUrls} from '@dashboard/dashboard-api-urls';
 import {UsersApiUrls} from '@app/modules/users/users-api-urls';
+import {BaseService} from '@app/core/base/base-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends BaseService<ApiResponse> {
 
-  private apiUrl = UrlJoin(environment.apiUrl, UsersApiUrls.USERS);
 
-  constructor(private http: HttpClient) {
+  constructor(http: HttpClient) {
+    super(http, UrlJoin(environment.apiUrl, UsersApiUrls.USERS))
   }
 
-  getUsers(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
 
-    return this.http.get<ApiResponse>(this.apiUrl, {
-      params: params
-    });
+  getUsers(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  } = {}): Observable<ApiResponse> {
+    return this.getDataPagination('', options);
   }
 
-  getRefreshTokens(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
-    return this.http.get<ApiResponse>(UrlJoin(this.apiUrl, 'refresh-tokens'), {params});
+  getRefreshTokens(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  } = {}): Observable<ApiResponse> {
+    return this.getDataPagination('refresh-tokens', options);
   }
 
-  getUniversities(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
-    return this.http.get<ApiResponse>(UrlJoin(this.apiUrl, 'universities'), {params});
+  getUniversities(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  } = {}): Observable<ApiResponse> {
+    return this.getDataPagination('universities', options);
   }
 
-  getFaculties(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page)
-      .set('pageSize', pageSize)
-      .set('sort', sort)
-      .set('order', order)
-    ;
-    return this.http.get<ApiResponse>(UrlJoin(this.apiUrl, 'faculties'), {params});
+  getFaculties(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  } = {}): Observable<ApiResponse> {
+    return this.getDataPagination('faculties', options);
   }
-
 }

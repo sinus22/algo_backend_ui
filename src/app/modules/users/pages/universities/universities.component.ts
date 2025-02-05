@@ -18,7 +18,7 @@ import {BaseTableComponent} from '@app/core/base/base-table-component';
   standalone: true,
   styleUrl: './universities.component.scss'
 })
-export class UniversitiesComponent extends BaseTableComponent<University>{
+export class UniversitiesComponent extends BaseTableComponent<University> {
 
   private userService = inject(UserService);
   columns: ColDef[] = [
@@ -38,7 +38,12 @@ export class UniversitiesComponent extends BaseTableComponent<University>{
 
   fetchData(): void {
     this.userService
-      .getUniversities(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
+      .getUniversities({
+        page: this.currentPage(),
+        pageSize: this.pageSize(),
+        sort: this.sortColumn(),
+        order: this.sortDirection()
+      })
       .subscribe({
           next: (response) => {
 

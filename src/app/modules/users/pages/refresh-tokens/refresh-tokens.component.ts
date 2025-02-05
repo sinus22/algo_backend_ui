@@ -38,7 +38,12 @@ export class RefreshTokensComponent extends BaseTableComponent<RefreshToken> {
 
   fetchData(): void {
     this.userService
-      .getRefreshTokens(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
+      .getRefreshTokens({
+        page: this.currentPage(),
+        pageSize: this.pageSize(),
+        sort: this.sortColumn(),
+        order: this.sortDirection()
+      })
       .subscribe({
           next: (response) => {
 

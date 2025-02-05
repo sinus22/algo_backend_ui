@@ -1,10 +1,11 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {User} from '@app/modules/users/models/user';
 import {ColDef} from '@dashboard/models/coldef';
 import {UserService} from '@app/modules/users/services/user.service';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
+import {BaseTableComponent} from '@app/core/base/base-table-component';
 
 @Component({
   selector: 'app-user-list',
@@ -16,41 +17,39 @@ import {DatatableComponent} from '@shared/components/datatable/datatable.compone
   standalone: true,
   styleUrl: './user-list.component.scss'
 })
-export class UserListComponent implements OnInit {
-  users = signal<User[]>([]);
-  totalItems = signal<number>(0);
-  totalPages = signal<number>(0);
-  currentPage = signal<number>(1);
-  pageSize = signal<number>(10);
-  sortColumn = signal<string>('id');
-  sortDirection = signal<string>('desc');
-  hasPreviousPage = signal<boolean>(true);
-  hasNextPage = signal<boolean>(true);
+export class UserListComponent extends BaseTableComponent<User> {
+  private userService = inject(UserService);
   columns: ColDef[] = [
     {label: 'Id', key: 'id', sortable: true},
     {label: 'Username', key: 'username', sortable: true},
     {label: 'Email', key: 'email', sortable: true},
     {label: 'Status', key: 'status', sortable: true},
-    {label: 'Created At', key: 'createdAt', sortable: true, format: (value: any) =>
-        new Date(value).toLocaleString()},
-    {label: 'Updated At', key: 'updatedAt', sortable: true, format: (value: any) =>
-        new Date(value).toLocaleString()},
+    {
+      label: 'Created At', key: 'createdAt', sortable: true, format: (value: any) =>
+        new Date(value).toLocaleString()
+    },
+    {
+      label: 'Updated At', key: 'updatedAt', sortable: true, format: (value: any) =>
+        new Date(value).toLocaleString()
+    },
   ]
 
-  constructor(private userService: UserService) {
-  }
 
-
-  loadUsers(): void {
+  fetchData(): void {
     this.userService
-      .getUsers(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
+      .getUsers({
+        page: this.currentPage(),
+        pageSize: this.pageSize(),
+        sort: this.sortColumn(),
+        order: this.sortDirection()
+      })
       .subscribe({
           next: (response) => {
 
             if (response.success) {
               const {items, totalItems, totalPages, page, pageSize, hasPreviousPage, hasNextPage} =
                 response.data as PaginatedResponse<User>;
-              this.users.set(items);
+              this.data.set(items);
               this.totalItems.set(totalItems);
               this.totalPages.set(totalPages);
               this.currentPage.set(page);
@@ -66,22 +65,6 @@ export class UserListComponent implements OnInit {
           }
         }
       );
-  }
-
-  ngOnInit(): void {
-    this.loadUsers();
-
-  }
-
-  onPageChange(page: number): void {
-    this.currentPage.set(page);
-    this.loadUsers();
-  }
-
-  onSortChange(sort: { column: string, order: string }) {
-    this.sortColumn.set(sort.column);
-    this.sortDirection.set(sort.order);
-    this.loadUsers();
   }
 
 }
