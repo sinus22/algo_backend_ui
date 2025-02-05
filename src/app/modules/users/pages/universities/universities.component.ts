@@ -25,19 +25,21 @@ export class UniversitiesComponent extends BaseTableComponent<University> {
 
   private userService = inject(UserService);
   filters: WritableSignal<{ [key: string]: string | number | boolean | null; }> = signal({});
+
   constructor() {
     super();
     effect(() => {
       this.fetchData();
     });
   }
+
   columns: ColDef[] = [
-    {label: 'Id', key: 'id', sortable: true},
+    {label: 'Id', key: 'id', sortable: true, filterable: true},
     {label: 'Name', key: 'name', sortable: true, filterable: true},
-    {label: 'Status', key: 'status', sortable: true},
+    {label: 'Status', key: 'status', sortable: true, filterable: true},
     {
       label: 'Created At', key: 'createdAt', sortable: true,
-      filterable: true,type:'date',
+      filterable: true, type: 'date',
       format: (value: any) =>
         new Date(value).toLocaleString()
     },
@@ -85,7 +87,7 @@ export class UniversitiesComponent extends BaseTableComponent<University> {
 
   onFilterChange(column: string, event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    this.filters.set({ ...this.filters(), [column]: inputElement.value });
+    this.filters.set({...this.filters(), [column]: inputElement.value});
   }
 
   /**
@@ -96,7 +98,7 @@ export class UniversitiesComponent extends BaseTableComponent<University> {
     const date = new Date(inputElement.value);
     console.log(date);
     const filterKey = `${column}${type === 'from' ? 'From' : 'To'}`;
-    this.filters.set({ ...this.filters(), [filterKey]: date.toISOString() });
+    this.filters.set({...this.filters(), [filterKey]: date.toISOString()});
   }
 
 }

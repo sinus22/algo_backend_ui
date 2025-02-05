@@ -5,6 +5,7 @@
       class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
       <div class="mb-4 grid grid-cols-3 gap-4">
         <div *ngFor="let column of columns">
+          @if (column.filterable === true){
           <label class="block font-medium">{{ column.label }}</label>
 
           <!-- Agar filter text bo‘lsa -->
@@ -29,6 +30,7 @@
               (change)="onDateFilterChange(column.key, 'to', $event)"
               placeholder="To Date" />
           </div>
+          }
         </div>
       </div>
       <h1>Salom</h1>
