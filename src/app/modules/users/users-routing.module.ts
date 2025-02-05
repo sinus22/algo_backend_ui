@@ -13,6 +13,9 @@ const routes: Routes = [
   {
     path: 'universities',
     loadComponent: () => import('@app/modules/users/pages/universities/universities.component').then(m => m.UniversitiesComponent)
+  }, {
+    path: 'universities/create',
+    loadComponent: () => import('@app/modules/users/pages/universities/university-create/university-create.component').then(m => m.UniversityCreateComponent)
   },
   {
     path: 'faculties',

@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {RefreshToken} from '@app/modules/users/models/refresh-token';
 import {ColDef} from '@dashboard/models/coldef';
 import {UserService} from '@app/modules/users/services/user.service';
@@ -6,6 +6,7 @@ import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {University} from '@app/modules/users/models/university';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
+import {BaseTableComponent} from '@app/core/base/base-table-component';
 
 @Component({
   selector: 'app-universities',
@@ -17,16 +18,9 @@ import {DatatableComponent} from '@shared/components/datatable/datatable.compone
   standalone: true,
   styleUrl: './universities.component.scss'
 })
-export class UniversitiesComponent implements OnInit{
-  data = signal<University[]>([]);
-  totalItems = signal<number>(0);
-  totalPages = signal<number>(0);
-  currentPage = signal<number>(1);
-  pageSize = signal<number>(20);
-  sortColumn = signal<string>('id');
-  sortDirection = signal<string>('desc');
-  hasPreviousPage = signal<boolean>(true);
-  hasNextPage = signal<boolean>(true);
+export class UniversitiesComponent extends BaseTableComponent<University>{
+
+  private userService = inject(UserService);
   columns: ColDef[] = [
     {label: 'Id', key: 'id', sortable: true},
     {label: 'Name', key: 'name', sortable: true},
@@ -41,11 +35,8 @@ export class UniversitiesComponent implements OnInit{
     },
   ]
 
-  constructor(private userService: UserService) {
-  }
 
-
-  loadUniversities(): void {
+  fetchData(): void {
     this.userService
       .getUniversities(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
       .subscribe({
@@ -70,21 +61,5 @@ export class UniversitiesComponent implements OnInit{
           }
         }
       );
-  }
-
-  ngOnInit(): void {
-    this.loadUniversities();
-
-  }
-
-  onPageChange(page: number): void {
-    this.currentPage.set(page);
-    this.loadUniversities();
-  }
-
-  onSortChange(sort: { column: string, order: string }) {
-    this.sortColumn.set(sort.column);
-    this.sortDirection.set(sort.order);
-    this.loadUniversities();
   }
 }
