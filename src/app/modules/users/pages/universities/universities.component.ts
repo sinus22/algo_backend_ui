@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, effect, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {RefreshToken} from '@app/modules/users/models/refresh-token';
 import {ColDef} from '@dashboard/models/coldef';
 import {UserService} from '@app/modules/users/services/user.service';
@@ -7,12 +7,15 @@ import {University} from '@app/modules/users/models/university';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 import {BaseTableComponent} from '@app/core/base/base-table-component';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-universities',
   imports: [
     NftHeaderComponent,
-    DatatableComponent
+    DatatableComponent,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './universities.component.html',
   standalone: true,
@@ -21,16 +24,27 @@ import {BaseTableComponent} from '@app/core/base/base-table-component';
 export class UniversitiesComponent extends BaseTableComponent<University> {
 
   private userService = inject(UserService);
+  filters: WritableSignal<{ [key: string]: string | number | boolean | null; }> = signal({});
+  constructor() {
+    super();
+    effect(() => {
+      this.fetchData();
+    });
+  }
   columns: ColDef[] = [
     {label: 'Id', key: 'id', sortable: true},
-    {label: 'Name', key: 'name', sortable: true},
+    {label: 'Name', key: 'name', sortable: true, filterable: true},
     {label: 'Status', key: 'status', sortable: true},
     {
-      label: 'Created At', key: 'createdAt', sortable: true, format: (value: any) =>
+      label: 'Created At', key: 'createdAt', sortable: true,
+      filterable: true,type:'date',
+      format: (value: any) =>
         new Date(value).toLocaleString()
     },
     {
-      label: 'Updated At', key: 'updatedAt', sortable: true, format: (value: any) =>
+      label: 'Updated At', key: 'updatedAt', sortable: true,
+      // filterable: true,type:'date',
+      format: (value: any) =>
         new Date(value).toLocaleString()
     },
   ]
@@ -42,7 +56,8 @@ export class UniversitiesComponent extends BaseTableComponent<University> {
         page: this.currentPage(),
         pageSize: this.pageSize(),
         sort: this.sortColumn(),
-        order: this.sortDirection()
+        order: this.sortDirection(),
+        filters: this.filters(),
       })
       .subscribe({
           next: (response) => {
@@ -67,4 +82,21 @@ export class UniversitiesComponent extends BaseTableComponent<University> {
         }
       );
   }
+
+  onFilterChange(column: string, event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.filters.set({ ...this.filters(), [column]: inputElement.value });
+  }
+
+  /**
+   * 🛠 **Date Range Filtering**
+   */
+  onDateFilterChange(column: string, type: 'from' | 'to', event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const date = new Date(inputElement.value);
+    console.log(date);
+    const filterKey = `${column}${type === 'from' ? 'From' : 'To'}`;
+    this.filters.set({ ...this.filters(), [filterKey]: date.toISOString() });
+  }
+
 }

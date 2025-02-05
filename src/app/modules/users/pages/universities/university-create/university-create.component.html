@@ -1,1 +1,35 @@
-<p>university-create works!</p>
+<div class="bg-white p-5 shadow-xl rounded-lg">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+    <!-- Title -->
+    <div class="mb-4">
+      <label for="name" class="block font-medium">Title</label>
+      <input id="name" type="text" formControlName="name" class="form-input" />
+      <p *ngIf="f['name'].invalid && f['name']['touched']" class="text-red-500 text-sm">
+        <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
+        <span *ngIf="f['name'].errors?.['minlength']">Minimum 3 characters.</span>
+      </p>
+    </div>
+
+
+
+    <!-- Status -->
+    <div class="mb-4 flex items-center">
+      <input id="status" type="checkbox" formControlName="status" class="mr-2" />
+      <label for="status" class="font-medium">Active</label>
+    </div>
+
+
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="form.invalid || isSubmitting()"
+      class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 disabled:opacity-50"
+    >
+      <span *ngIf="isSubmitting()">Processing...</span>
+      <span *ngIf="!isSubmitting()">Create Problem</span>
+    </button>
+  </form>
+</div>

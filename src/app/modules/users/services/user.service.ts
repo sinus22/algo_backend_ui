@@ -7,6 +7,7 @@ import UrlJoin from 'url-join';
 import {DashboardApiUrls} from '@dashboard/dashboard-api-urls';
 import {UsersApiUrls} from '@app/modules/users/users-api-urls';
 import {BaseService} from '@app/core/base/base-service';
+import {UniversityCreate} from '@app/modules/users/models/university-create.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,9 @@ export class UserService extends BaseService<ApiResponse> {
     filters?: { [key: string]: string | number | boolean | null };
   } = {}): Observable<ApiResponse> {
     return this.getDataPagination('faculties', options);
+  }
+
+  createUniversity(body: UniversityCreate): Observable<ApiResponse> {
+    return this.postData('universities', body);
   }
 }

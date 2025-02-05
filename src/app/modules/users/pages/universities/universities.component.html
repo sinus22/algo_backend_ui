@@ -3,7 +3,35 @@
   <div class="flex min-w-full flex-col rounded-xl border border-muted/20 bg-background p-2">
     <div
       class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
+      <div class="mb-4 grid grid-cols-3 gap-4">
+        <div *ngFor="let column of columns">
+          <label class="block font-medium">{{ column.label }}</label>
 
+          <!-- Agar filter text bo‘lsa -->
+          <input
+            *ngIf="column.filterable && column.type !== 'date'"
+            type="text"
+            class="form-input w-full p-2 border rounded"
+            [placeholder]="'Filter ' + column.label"
+            (input)="onFilterChange(column.key, $event)" />
+
+          <!-- Agar filter date bo‘lsa -->
+          <div *ngIf="column.filterable && column.type === 'date'" class="flex gap-2">
+            <input
+              type="datetime-local"
+              class="form-input w-full p-2 border rounded"
+              (change)="onDateFilterChange(column.key, 'from', $event)"
+              placeholder="From Date" />
+
+            <input
+              type="datetime-local"
+              class="form-input w-full p-2 border rounded"
+              (change)="onDateFilterChange(column.key, 'to', $event)"
+              placeholder="To Date" />
+          </div>
+        </div>
+      </div>
+      <h1>Salom</h1>
       <app-datatable [data]="data()" [columns]="columns" [currentPage]="currentPage()"
                      [totalPages]="totalPages()" (pageChange)="onPageChange($event)"
                      [hasPreviousPage]="hasPreviousPage()"

@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {coerceBooleanProperty, coerceNumberProperty} from '@angular/cdk/coercion';
 import {ColDef} from '@dashboard/models/coldef';
@@ -12,9 +22,10 @@ import {ColDef} from '@dashboard/models/coldef';
     NgIf,
     NgClass,
   ],
-  styleUrl: './datatable.component.scss'
+  styleUrl: './datatable.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatableComponent implements OnInit {
+export class DatatableComponent {
 
   @Input() data: any[] = [];
   @Input() columns: ColDef[] = [];
@@ -29,9 +40,6 @@ export class DatatableComponent implements OnInit {
   sortColumn: string | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  ngOnInit(): void {
-
-  }
 
   // ngOnChanges(changes: SimpleChanges): void {
   //   if (changes['hasPreviousPage']) {
