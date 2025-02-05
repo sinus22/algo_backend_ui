@@ -1,34 +1,34 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
-import {PaginatedResponse} from '@dashboard/models/paginationResponse';
-import {Problem} from '@app/modules/problems/models/problem';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import { Observable} from 'rxjs';
 import UrlJoin from 'url-join';
 import {environment} from '@environments/environment';
-import {DashboardApiUrls} from '@dashboard/dashboard-api-urls';
 import {CreateProblem} from '@app/core/models/create-problem';
 import {ApiResponse} from '@dashboard/models/apiResponse';
 import {ProblemsApiUrls} from '@app/modules/problems/problems-api-urls';
+import {BaseService} from '@app/core/base/base-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProblemService {
-  private baseUrl = UrlJoin(environment.apiUrl, ProblemsApiUrls.PROBLEMS);
-  constructor(private client: HttpClient) { }
-  getProblems(page: number = 1, perPage: number = 10): Observable<ApiResponse> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('pageSize', perPage.toString());
-    return this.client.get<ApiResponse>(this.baseUrl, {params});
+export class ProblemService extends BaseService<ApiResponse> {
+  constructor(client: HttpClient) {
+    super(client, UrlJoin(environment.apiUrl, ProblemsApiUrls.PROBLEMS))
   }
+
+  getProblems(options: {
+    page?: number;
+    pageSize?: number;
+    sort?: string;
+    order?: string;
+    filters?: { [key: string]: string | number | boolean | null };
+  }): Observable<ApiResponse> {
+
+    return this.getDataPagination('', options)
+  }
+
   createProblem(problem: CreateProblem): Observable<any> {
-    return this.client.post(this.baseUrl, problem).pipe(
-      catchError((error) => {
-        console.error('Error creating problem:', error);
-        return throwError(() => error);
-      })
-    );
+    return this.postData('', problem);
   }
 
 }

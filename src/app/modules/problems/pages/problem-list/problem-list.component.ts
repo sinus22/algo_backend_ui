@@ -1,10 +1,11 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {Problem} from '@app/modules/problems/models/problem';
 import {ColDef} from '@dashboard/models/coldef';
 import {ProblemService} from '@app/modules/problems/services/problem.service';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
+import {BaseTableComponent} from '@app/core/base/base-table-component';
 
 @Component({
   selector: 'app-problem-list',
@@ -16,17 +17,9 @@ import {DatatableComponent} from '@shared/components/datatable/datatable.compone
   standalone: true,
   styleUrl: './problem-list.component.scss'
 })
-export class ProblemListComponent implements OnInit {
-  problems = signal<Problem[]>([]);
-  // users: User[] = [];
-  totalItems: number = 0;
-  totalPages: number = 0;
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  hasPreviousPage: boolean = false;
-  hasNextPage: boolean = true;
-  sortColumn = signal<string>('id');
-  sortDirection = signal<string>('desc');
+export class ProblemListComponent extends BaseTableComponent<Problem> {
+  private problemService = inject(ProblemService);
+
   columns: ColDef[] = [
     {label: 'Id', key: 'id', sortable: true},
     {label: 'Num', key: 'num', sortable: true},
@@ -37,41 +30,25 @@ export class ProblemListComponent implements OnInit {
     {label: 'Memory Limit', key: 'memoryLimit', sortable: true},
   ]
 
-  constructor(private problemService: ProblemService) {
-  }
-
-  loadProblem() {
-    this.problemService.getProblems(this.currentPage, this.itemsPerPage).subscribe({
+  fetchData() {
+    this.problemService.getProblems({
+      page: this.currentPage(),
+      pageSize: this.pageSize(),
+      sort: this.sortColumn(),
+      order: this.sortDirection()
+    }).subscribe({
       next: (response) => {
         if (response.success) {
           const paginated = response.data as PaginatedResponse<Problem>;
-          this.problems.set(paginated.items)
-          console.log(paginated.items);
-          this.totalItems = paginated.totalItems;
-          this.totalPages = paginated.totalPages;
-          this.currentPage = paginated.page;
-          this.itemsPerPage = paginated.pageSize;
-          this.hasPreviousPage = paginated.hasPreviousPage;
-          this.hasNextPage = paginated.hasNextPage;
+          this.data.set(paginated.items)
+          this.totalItems.set(paginated.totalItems);
+          this.totalPages.set(paginated.totalPages);
+          this.currentPage.set(paginated.page);
+          this.pageSize.set(paginated.pageSize);
+          this.hasPreviousPage.set(paginated.hasPreviousPage);
+          this.hasNextPage.set(paginated.hasNextPage);
         }
-
       }
     })
   }
-
-  ngOnInit() {
-    this.loadProblem();
-  }
-
-  onPageChange(page: number): void {
-    this.currentPage = page;
-    this.loadProblem();
-  }
-
-  onSortChange(sort: { column: string, order: string }) {
-    this.sortColumn.set(sort.column);
-    this.sortDirection.set(sort.order);
-    this.loadProblem();
-  }
-
 }

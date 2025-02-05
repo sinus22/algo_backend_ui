@@ -1,10 +1,10 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {filter, Observable} from 'rxjs';
+import {catchError, filter, Observable, throwError} from 'rxjs';
 import {ApiResponse} from '@dashboard/models/apiResponse';
 import UrlJoin from 'url-join';
 
 export abstract class BaseService<T> {
-  protected constructor(protected http: HttpClient, private baseUrl: string) {
+  protected constructor(private http: HttpClient, private baseUrl: string) {
   }
 
 
@@ -64,5 +64,14 @@ export abstract class BaseService<T> {
     return this.http.get<ApiResponse>(UrlJoin(this.baseUrl, endpoint), {
       params: this.createParamsPagination(options)
     });
+  }
+
+  protected postData(endpoint: string, body: object): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(UrlJoin(this.baseUrl, endpoint), body).pipe(
+      catchError((error) => {
+        console.error('Error creating problem:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }
