@@ -1,3 +1,3 @@
 export enum ContestsApiUrls {
-  CONTESTS = '/api/v1/admin/contests',
+  CONTESTS = 'api/v1/admin/contests',
 }

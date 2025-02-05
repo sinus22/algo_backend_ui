@@ -5,4 +5,6 @@ export interface Contest {
   duration: number;
   type: number;
   status: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }

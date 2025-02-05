@@ -1,26 +1,27 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {ContestService} from '@app/modules/contests/services/contest.service';
-import {Contest} from '@app/modules/contests/models/contest';
+import {ContestStanding} from '@app/modules/contests/models/contest-standing';
 import {ColDef} from '@dashboard/models/coldef';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
+import {ContestProblem} from '@app/modules/contests/models/contest-problem';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 
 @Component({
-  selector: 'app-contest-list',
+  selector: 'app-contest-problems',
   imports: [
     NftHeaderComponent,
     DatatableComponent
   ],
-  templateUrl: './contest-list.component.html',
+  templateUrl: './contest-problems.component.html',
   standalone: true,
-  styleUrl: './contest-list.component.scss'
+  styleUrl: './contest-problems.component.scss'
 })
-export class ContestListComponent implements OnInit{
+export class ContestProblemsComponent implements OnInit{
   constructor(private contestService: ContestService) {
   }
 
-  contests = signal<Contest[]>([]);
+  contests = signal<ContestProblem[]>([]);
   totalItems = signal<number>(0);
   totalPages = signal<number>(0);
   currentPage = signal<number>(1);
@@ -31,12 +32,9 @@ export class ContestListComponent implements OnInit{
   hasNextPage = signal<boolean>(true);
   columns: ColDef[] = [
     {label: 'Id', key: 'id',sortable: true},
-    {label: 'Title', key: 'title', sortable: true},
-    {label: 'Boshlanish vaqti', key: 'startDate', sortable: true, format: (value: any) =>
-        new Date(value).toLocaleString()},
-    {label: 'Davomiylik', key: 'duration', sortable: true},
-    {label: 'Type', key: 'type', sortable: true},
-    {label: 'Status', key: 'status', sortable: true},
+    {label: 'Contest Id', key: 'contestId', sortable: true},
+    {label: 'Problem id', key: 'problemId', sortable: true},
+    {label: 'Definition', key: 'definition', sortable: true},
     {label: 'Created at', key: 'createdAt', sortable: true, format: (value: any) =>
         new Date(value).toLocaleString()},
     {label: 'Updated at', key: 'updatedAt', sortable: true, format: (value: any) =>
@@ -46,19 +44,19 @@ export class ContestListComponent implements OnInit{
 
 
   ngOnInit() {
-    this.loadContests();
+    this.loadContestProblems();
   }
 
-  loadContests(): void {
+  loadContestProblems(): void {
     this.contestService
-      .getContests(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
+      .getContestProblems(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
       .subscribe({
           next: (response) => {
 
             if (response.success) {
               console.log(response.data);
               const {items, totalItems, totalPages, page, pageSize, hasPreviousPage, hasNextPage} =
-                response.data as PaginatedResponse<Contest>;
+                response.data as PaginatedResponse<ContestProblem>;
               this.contests.set(items);
               this.totalItems.set(totalItems);
               this.totalPages.set(totalPages);
@@ -79,12 +77,12 @@ export class ContestListComponent implements OnInit{
 
   onPageChange(page: number): void {
     this.currentPage.set(page);
-    this.loadContests();
+    this.loadContestProblems();
   }
 
   onSortChange(sort: { column: string, order: string }) {
     this.sortColumn.set(sort.column);
     this.sortDirection.set(sort.order);
-    this.loadContests();
+    this.loadContestProblems();
   }
 }

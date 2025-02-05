@@ -1,0 +1,22 @@
+<div>
+  <app-nft-header createUrl="/dashboard/contests/create"></app-nft-header>
+  <div class="flex min-w-full flex-col rounded-xl border border-muted/20 bg-background p-2">
+    <div
+      class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
+
+      <app-datatable [data]="contests()" [columns]="columns" [currentPage]="currentPage()"
+                     [totalPages]="totalPages()" (pageChange)="onPageChange($event)"
+                     [hasPreviousPage]="hasPreviousPage()"
+                     [hasNextPage]="hasNextPage()"
+                     (sortChange)="onSortChange($event)"
+      >
+      </app-datatable>
+      <!--      <ag-grid-angular-->
+      <!--      [rowData]="rowData"-->
+      <!--      [columnDefs]="colDefs"-->
+      <!--      >-->
+      <!--      </ag-grid-angular>-->
+
+    </div>
+  </div>
+</div>

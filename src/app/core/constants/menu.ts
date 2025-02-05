@@ -1,4 +1,4 @@
-import { MenuItem } from '../models/menu.model';
+import {MenuItem} from '../models/menu.model';
 
 export class Menu {
   public static pages: MenuItem[] = [
@@ -11,7 +11,7 @@ export class Menu {
           label: 'Dashboard',
           route: '/dashboard',
           children: [
-            { label: 'Nfts', route: '/dashboard/nfts' },
+            {label: 'Nfts', route: '/dashboard/nfts'},
           ],
         },
         {
@@ -19,7 +19,10 @@ export class Menu {
           label: 'Users',
           route: '/users',
           children: [
-            { label: 'User list', route: '/users/list' },
+            {label: 'User list', route: '/users/list'},
+            {label: 'Refresh tokens', route: '/users/refresh-tokens'},
+            {label: 'Universities', route: '/users/universities'},
+            {label: 'Faculties', route: '/users/faculties'},
           ],
         },
         {
@@ -27,7 +30,9 @@ export class Menu {
           label: 'Contests',
           route: '/contests',
           children: [
-            { label: 'Contest list', route: '/contests/list' },
+            {label: 'Contest list', route: '/contests/list'},
+            {label: 'Contest Standings', route: '/contests/standings'},
+            {label: 'Contest Problems', route: '/contests/problems'},
           ],
         },
         {
@@ -35,7 +40,7 @@ export class Menu {
           label: 'Problems',
           route: '/problems',
           children: [
-            { label: 'Problem list', route: '/problems/list' },
+            {label: 'Problem list', route: '/problems/list'},
           ],
         },
         {
@@ -43,10 +48,9 @@ export class Menu {
           label: 'Submissions',
           route: '/submissions',
           children: [
-            { label: 'Submission list', route: '/submissions/list' },
+            {label: 'Submission list', route: '/submissions/list'},
           ],
         },
-
 
 
         {
@@ -54,11 +58,11 @@ export class Menu {
           label: 'Auth',
           route: '/auth',
           children: [
-            { label: 'Sign up', route: '/auth/sign-up' },
-            { label: 'Sign in', route: '/auth/sign-in' },
-            { label: 'Forgot Password', route: '/auth/forgot-password' },
-            { label: 'New Password', route: '/auth/new-password' },
-            { label: 'Two Steps', route: '/auth/two-steps' },
+            {label: 'Sign up', route: '/auth/sign-up'},
+            {label: 'Sign in', route: '/auth/sign-in'},
+            {label: 'Forgot Password', route: '/auth/forgot-password'},
+            {label: 'New Password', route: '/auth/new-password'},
+            {label: 'Two Steps', route: '/auth/two-steps'},
           ],
         },
         {
@@ -66,15 +70,15 @@ export class Menu {
           label: 'Errors',
           route: '/errors',
           children: [
-            { label: '404', route: '/errors/404' },
-            { label: '500', route: '/errors/500' },
+            {label: '404', route: '/errors/404'},
+            {label: '500', route: '/errors/500'},
           ],
         },
         {
           icon: 'assets/icons/heroicons/outline/cube.svg',
           label: 'Components',
           route: '/components',
-          children: [{ label: 'Table', route: '/components/table' }],
+          children: [{label: 'Table', route: '/components/table'}],
         },
       ],
     },
@@ -118,9 +122,9 @@ export class Menu {
           label: 'Folders',
           route: '/folders',
           children: [
-            { label: 'Current Files', route: '/folders/current-files' },
-            { label: 'Downloads', route: '/folders/download' },
-            { label: 'Trash', route: '/folders/trash' },
+            {label: 'Current Files', route: '/folders/current-files'},
+            {label: 'Downloads', route: '/folders/download'},
+            {label: 'Trash', route: '/folders/trash'},
           ],
         },
       ],

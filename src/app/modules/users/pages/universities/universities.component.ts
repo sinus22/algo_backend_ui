@@ -1,26 +1,24 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {ContestService} from '@app/modules/contests/services/contest.service';
-import {Contest} from '@app/modules/contests/models/contest';
+import {RefreshToken} from '@app/modules/users/models/refresh-token';
 import {ColDef} from '@dashboard/models/coldef';
+import {UserService} from '@app/modules/users/services/user.service';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
+import {University} from '@app/modules/users/models/university';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 
 @Component({
-  selector: 'app-contest-list',
+  selector: 'app-universities',
   imports: [
     NftHeaderComponent,
     DatatableComponent
   ],
-  templateUrl: './contest-list.component.html',
+  templateUrl: './universities.component.html',
   standalone: true,
-  styleUrl: './contest-list.component.scss'
+  styleUrl: './universities.component.scss'
 })
-export class ContestListComponent implements OnInit{
-  constructor(private contestService: ContestService) {
-  }
-
-  contests = signal<Contest[]>([]);
+export class UniversitiesComponent implements OnInit{
+  data = signal<University[]>([]);
   totalItems = signal<number>(0);
   totalPages = signal<number>(0);
   currentPage = signal<number>(1);
@@ -30,36 +28,33 @@ export class ContestListComponent implements OnInit{
   hasPreviousPage = signal<boolean>(true);
   hasNextPage = signal<boolean>(true);
   columns: ColDef[] = [
-    {label: 'Id', key: 'id',sortable: true},
-    {label: 'Title', key: 'title', sortable: true},
-    {label: 'Boshlanish vaqti', key: 'startDate', sortable: true, format: (value: any) =>
-        new Date(value).toLocaleString()},
-    {label: 'Davomiylik', key: 'duration', sortable: true},
-    {label: 'Type', key: 'type', sortable: true},
+    {label: 'Id', key: 'id', sortable: true},
+    {label: 'Name', key: 'name', sortable: true},
     {label: 'Status', key: 'status', sortable: true},
-    {label: 'Created at', key: 'createdAt', sortable: true, format: (value: any) =>
-        new Date(value).toLocaleString()},
-    {label: 'Updated at', key: 'updatedAt', sortable: true, format: (value: any) =>
-        new Date(value).toLocaleString()},
+    {
+      label: 'Created At', key: 'createdAt', sortable: true, format: (value: any) =>
+        new Date(value).toLocaleString()
+    },
+    {
+      label: 'Updated At', key: 'updatedAt', sortable: true, format: (value: any) =>
+        new Date(value).toLocaleString()
+    },
+  ]
 
-  ];
-
-
-  ngOnInit() {
-    this.loadContests();
+  constructor(private userService: UserService) {
   }
 
-  loadContests(): void {
-    this.contestService
-      .getContests(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
+
+  loadUniversities(): void {
+    this.userService
+      .getUniversities(this.currentPage(), this.pageSize(), this.sortColumn(), this.sortDirection())
       .subscribe({
           next: (response) => {
 
             if (response.success) {
-              console.log(response.data);
               const {items, totalItems, totalPages, page, pageSize, hasPreviousPage, hasNextPage} =
-                response.data as PaginatedResponse<Contest>;
-              this.contests.set(items);
+                response.data as PaginatedResponse<University>;
+              this.data.set(items);
               this.totalItems.set(totalItems);
               this.totalPages.set(totalPages);
               this.currentPage.set(page);
@@ -77,14 +72,19 @@ export class ContestListComponent implements OnInit{
       );
   }
 
+  ngOnInit(): void {
+    this.loadUniversities();
+
+  }
+
   onPageChange(page: number): void {
     this.currentPage.set(page);
-    this.loadContests();
+    this.loadUniversities();
   }
 
   onSortChange(sort: { column: string, order: string }) {
     this.sortColumn.set(sort.column);
     this.sortDirection.set(sort.order);
-    this.loadContests();
+    this.loadUniversities();
   }
 }

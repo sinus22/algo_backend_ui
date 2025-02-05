@@ -24,15 +24,40 @@ export class UserService {
       .set('sort', sort)
       .set('order', order)
     ;
-    const accessToken=localStorage.getItem('accessToken');
-    const headers=new HttpHeaders()
-      .set('Accept', 'application/json')
-      .set('Content-Type', 'application/json')
-      .set('Authorization', 'Bearer ' + accessToken);
-    ;
-    return this.http.get<ApiResponse>(this.apiUrl, {params: params
-      // headers: headers,
-      // withCredentials: true
+
+    return this.http.get<ApiResponse>(this.apiUrl, {
+      params: params
     });
   }
+
+  getRefreshTokens(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('pageSize', pageSize)
+      .set('sort', sort)
+      .set('order', order)
+    ;
+    return this.http.get<ApiResponse>(UrlJoin(this.apiUrl, 'refresh-tokens'), {params});
+  }
+
+  getUniversities(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('pageSize', pageSize)
+      .set('sort', sort)
+      .set('order', order)
+    ;
+    return this.http.get<ApiResponse>(UrlJoin(this.apiUrl, 'universities'), {params});
+  }
+
+  getFaculties(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string = 'desc'): Observable<ApiResponse> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('pageSize', pageSize)
+      .set('sort', sort)
+      .set('order', order)
+    ;
+    return this.http.get<ApiResponse>(UrlJoin(this.apiUrl, 'faculties'), {params});
+  }
+
 }
