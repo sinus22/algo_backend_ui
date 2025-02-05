@@ -1,6 +1,6 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {ContestService} from '@dashboard/service/contest.service';
-import {Contest} from '@dashboard/models/contest';
+import {ContestService} from '@app/modules/contests/services/contest.service';
+import {Contest} from '@app/modules/contests/models/contest';
 import {ColDef} from '@dashboard/models/coldef';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';

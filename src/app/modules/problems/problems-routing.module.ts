@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {
     path: 'list',
-    loadComponent: () => import('./problem-list/problem-list.component').then(m => m.ProblemListComponent)
+    loadComponent: () => import('@app/modules/problems/pages/problem-list/problem-list.component').then(m => m.ProblemListComponent)
   },
   {path: '', redirectTo: 'list', pathMatch: 'full'},
 ];

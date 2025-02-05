@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import UrlJoin from 'url-join';
 import {environment} from '@environments/environment'
-import {DashboardApiUrls} from '@dashboard/dashboard-api-urls';
 import {Observable} from 'rxjs';
 import {ApiResponse} from '@dashboard/models/apiResponse';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {ContestsApiUrls} from '@app/modules/contests/contests-api-urls';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContestService {
 
-  private apiUrl = UrlJoin(environment.apiUrl, DashboardApiUrls.CONTESTS);
+  private apiUrl = UrlJoin(environment.apiUrl, ContestsApiUrls.CONTESTS);
   constructor(private client: HttpClient) {
   }
   getContests(page: number = 1, pageSize: number = 10, sort: string = 'id', order: string='desc'): Observable<ApiResponse> {

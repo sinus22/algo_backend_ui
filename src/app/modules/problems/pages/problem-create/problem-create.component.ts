@@ -2,7 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {CreateProblem} from '@app/core/models/create-problem';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from '@angular/common';
-import {ProblemService} from '@dashboard/service/problem.service';
+import {ProblemService} from '@app/modules/problems/services/problem.service';
 import {Router} from '@angular/router';
 
 @Component({

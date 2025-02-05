@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
-import {User} from '@dashboard/models/user';
-import {UserService} from '@dashboard/service/user.service';
+import {User} from '@app/modules/users/models/user';
+import {UserService} from '@app/modules/users/services/user.service';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {ColDef} from '@dashboard/models/coldef';

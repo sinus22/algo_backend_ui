@@ -1,11 +1,11 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
-import {Problem} from '@dashboard/models/problem';
+import {Problem} from '@app/modules/problems/models/problem';
 import {ColDef} from '@dashboard/models/coldef';
-import {ProblemService} from '@dashboard/service/problem.service';
+import {ProblemService} from '@app/modules/problems/services/problem.service';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
-import {SubmissionService} from '@app/core/services/submissions/submission.service';
+import {SubmissionService} from '@app/modules/submissions/services/submission.service';
 import {Submission} from '@app/modules/submissions/models/submission';
 
 @Component({

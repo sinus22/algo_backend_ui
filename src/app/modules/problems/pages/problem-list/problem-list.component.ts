@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {Problem} from '@dashboard/models/problem';
+import {Problem} from '@app/modules/problems/models/problem';
 import {ColDef} from '@dashboard/models/coldef';
-import {ProblemService} from '@dashboard/service/problem.service';
+import {ProblemService} from '@app/modules/problems/services/problem.service';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
