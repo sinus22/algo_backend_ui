@@ -2,6 +2,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, filter, Observable, throwError} from 'rxjs';
 import {ApiResponse} from '@dashboard/models/apiResponse';
 import UrlJoin from 'url-join';
+import {Pagination} from '@app/core/base/pagination';
 
 export abstract class BaseService<T> {
   protected constructor(private http: HttpClient, private baseUrl: string) {
@@ -73,5 +74,15 @@ export abstract class BaseService<T> {
         return throwError(() => error);
       })
     );
+  }
+  protected defaultPagination(): Pagination{
+    return {
+      totalItems: 0,
+      totalPages: 0,
+      page: 1,
+      pageSize: 10,
+      hasNextPage: false,
+      hasPreviousPage: false,
+    }
   }
 }

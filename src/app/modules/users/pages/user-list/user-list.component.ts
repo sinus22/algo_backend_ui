@@ -43,28 +43,15 @@ export class UserListComponent extends BaseTableComponent<User> {
         sort: this.sortColumn(),
         order: this.sortDirection()
       })
-      .subscribe({
-          next: (response) => {
-
-            if (response.success) {
-              const {items, totalItems, totalPages, page, pageSize, hasPreviousPage, hasNextPage} =
-                response.data as PaginatedResponse<User>;
-              this.data.set(items);
-              this.totalItems.set(totalItems);
-              this.totalPages.set(totalPages);
-              this.currentPage.set(page);
-              this.pageSize.set(pageSize);
-              this.hasPreviousPage.set(hasPreviousPage);
-              this.hasNextPage.set(hasNextPage);
-            }
-
-          }
-          ,
-          error: (error) => {
-            console.error('Xatolik yuz berdi:', error);
-          }
-        }
-      );
+      .subscribe(({ users, pagination }) => {
+        this.data.set(users);
+        this.totalItems.set(pagination.totalItems);
+        this.totalPages.set(pagination.totalPages);
+        this.currentPage.set(pagination.page);
+        this.pageSize.set(pagination.pageSize);
+        this.hasPreviousPage.set(pagination.hasPreviousPage);
+        this.hasNextPage.set(pagination.hasNextPage);
+      });
   }
 
 }
