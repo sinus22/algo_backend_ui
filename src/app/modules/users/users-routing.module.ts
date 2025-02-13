@@ -21,6 +21,11 @@ const routes: Routes = [
     path: 'faculties',
     loadComponent: () => import('@app/modules/users/pages/faculties/faculties.component').then(m => m.FacultiesComponent)
   },
+  {
+    path: 'faculties/create',
+    loadComponent: () => import('@app/modules/users/pages/faculties/faculty-create/faculty-create.component').then(m => m.FacultyCreateComponent)
+  },
+
 
   {path: '', redirectTo: 'list', pathMatch: 'full'},
 ];

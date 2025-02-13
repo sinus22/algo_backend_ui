@@ -2,7 +2,6 @@ import {Component, inject, OnInit, signal} from '@angular/core';
 import {User} from '@app/modules/users/models/user';
 import {ColDef} from '@dashboard/models/coldef';
 import {UserService} from '@app/modules/users/services/user.service';
-import {PaginatedResponse} from '@dashboard/models/paginationResponse';
 import {NftHeaderComponent} from '@dashboard/components/nft/nft-header/nft-header.component';
 import {DatatableComponent} from '@shared/components/datatable/datatable.component';
 import {BaseTableComponent} from '@app/core/base/base-table-component';

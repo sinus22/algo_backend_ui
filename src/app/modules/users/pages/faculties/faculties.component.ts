@@ -1,5 +1,4 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
-import {University} from '@app/modules/users/models/university';
 import {ColDef} from '@dashboard/models/coldef';
 import {UserService} from '@app/modules/users/services/user.service';
 import {PaginatedResponse} from '@dashboard/models/paginationResponse';
