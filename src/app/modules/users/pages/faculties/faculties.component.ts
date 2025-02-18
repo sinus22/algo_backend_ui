@@ -50,6 +50,7 @@ export class FacultiesComponent extends BaseTableComponent<Faculty> {
               const {items, totalItems, totalPages, page, pageSize, hasPreviousPage, hasNextPage} =
                 response.data as PaginatedResponse<Faculty>;
               this.data.set(items);
+              console.log(items);
               this.totalItems.set(totalItems);
               this.totalPages.set(totalPages);
               this.currentPage.set(page);

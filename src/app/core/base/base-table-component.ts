@@ -1,5 +1,4 @@
-import {BaseComponent} from '@app/core/base/base-component';
-import {Component, Input, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ColDef} from '@dashboard/models/coldef';
 
 @Component({
@@ -31,8 +30,10 @@ export abstract class BaseTableComponent<T> implements OnInit {
   }
 
   onSortChange(sort: { column: string; order: string }) {
+
     this.sortColumn.set(sort.column);
     this.sortDirection.set(sort.order);
+
     this.fetchData();
   }
 }
